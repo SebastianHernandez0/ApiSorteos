@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace TechLottery.Models
+﻿namespace TechLottery.DTOs
 {
-    public class Sorteo
+    public class SorteoResponseDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SorteoId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
@@ -14,6 +9,6 @@ namespace TechLottery.Models
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public int BoletosTotales { get; set; }
-        public int BoletosVendidos { get; set; } = 0;
+        public int BoletosVendidos { get; set; }
     }
 }
