@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechLottery.Models;
 
@@ -11,9 +12,11 @@ using TechLottery.Models;
 namespace TechLottery.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250131002831_pagodetail")]
+    partial class pagodetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,9 +96,6 @@ namespace TechLottery.Migrations
 
                     b.Property<int>("Monto")
                         .HasColumnType("int");
-
-                    b.Property<string>("TokenWebpay")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -259,7 +259,7 @@ namespace TechLottery.Migrations
             modelBuilder.Entity("TechLottery.Models.PagoDetalle", b =>
                 {
                     b.HasOne("TechLottery.Models.Pago", "Pago")
-                        .WithMany("PagoDetalles")
+                        .WithMany()
                         .HasForeignKey("PagoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -273,11 +273,6 @@ namespace TechLottery.Migrations
                     b.Navigation("Pago");
 
                     b.Navigation("Sorteo");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.Pago", b =>
-                {
-                    b.Navigation("PagoDetalles");
                 });
 #pragma warning restore 612, 618
         }

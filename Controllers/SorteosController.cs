@@ -30,7 +30,8 @@ namespace TechLottery.Controllers
                 FechaInicio = x.FechaInicio,
                 FechaFin = x.FechaFin,
                 BoletosTotales = x.BoletosTotales,
-                BoletosVendidos = x.BoletosVendidos
+                BoletosVendidos = x.BoletosVendidos,
+                Imagen= x.Imagen
             }).ToListAsync();
         }
 
@@ -54,14 +55,16 @@ namespace TechLottery.Controllers
                 FechaInicio = sorteo.FechaInicio,
                 FechaFin = sorteo.FechaFin,
                 BoletosTotales = sorteo.BoletosTotales,
-                BoletosVendidos = sorteo.BoletosVendidos
+                BoletosVendidos = sorteo.BoletosVendidos,
+                Imagen= sorteo.Imagen
             };
             return Ok(sorteoDto);
         }
 
         [HttpPost]
-        
-            
+        [Authorize(Policy = "Admin")]
+
+
         public async Task<ActionResult<SorteoResponseDto>> Add(SorteoRequestDto sorteoRequestDto)
         {
             var sorteo = new Sorteo
@@ -71,7 +74,8 @@ namespace TechLottery.Controllers
                 PrecioBoletos = sorteoRequestDto.PrecioBoletos,
                 FechaInicio = sorteoRequestDto.FechaInicio,
                 FechaFin = sorteoRequestDto.FechaFin,
-                BoletosTotales = sorteoRequestDto.BoletosTotales
+                BoletosTotales = sorteoRequestDto.BoletosTotales,
+                Imagen= sorteoRequestDto.Imagen
             };
             await _context.Sorteos.AddAsync(sorteo);
             await _context.SaveChangesAsync();
@@ -84,7 +88,8 @@ namespace TechLottery.Controllers
                 FechaInicio = sorteo.FechaInicio,
                 FechaFin = sorteo.FechaFin,
                 BoletosTotales = sorteo.BoletosTotales,
-                BoletosVendidos = sorteo.BoletosVendidos
+                BoletosVendidos = sorteo.BoletosVendidos,
+                Imagen = sorteo.Imagen
             });
         }
 

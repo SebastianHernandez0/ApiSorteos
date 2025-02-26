@@ -8,5 +8,6 @@
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public int BoletosTotales { get; set; }
+        public string Imagen { get; set; }
     }
 }

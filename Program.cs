@@ -7,6 +7,9 @@ using System.Text;
 using FluentValidation;
 using TechLottery.DTOs;
 using TechLottery.Validators;
+using Transbank.Webpay.WebpayPlus;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 //CORS
 
@@ -75,6 +80,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ApiScope", policy => policy.RequireAuthenticatedUser());
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
 });
+
 
 
 

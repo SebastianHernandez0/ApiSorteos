@@ -11,6 +11,8 @@ namespace TechLottery.Models
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<HistorialSorteo> HistorialSorteos { get; set; }
         public DbSet<Boleto> Boletos { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
+        public DbSet<PagoDetalle> PagoDetalles { get; set; }
     }
     
 

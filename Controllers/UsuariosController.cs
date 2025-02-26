@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace TechLottery.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAllOrigins")]
     public class UsuariosController : ControllerBase
     {
         private readonly Context _context;
@@ -56,12 +58,15 @@ namespace TechLottery.Controllers
 
  
         [HttpPost("Register")]
+        
         public async Task<ActionResult<UsuarioResponseDto>> Register(UsuarioRequestDto usuarioRequestDto)
         {
             var validationResult = _usuarioRegisterValidator.Validate(usuarioRequestDto);
             if (!validationResult.IsValid)
             {
-                return BadRequest(validationResult.Errors);
+                var errors = validationResult.Errors.Select(e => new { e.PropertyName, e.ErrorMessage });
+                return BadRequest(new { Errors = errors });
+
             }
             var usuarioExistente = await _context.Usuarios.SingleOrDefaultAsync(u => u.Correo == usuarioRequestDto.Correo);
             if (usuarioExistente != null)
@@ -104,11 +109,13 @@ namespace TechLottery.Controllers
             var usuario = await _context.Usuarios.SingleOrDefaultAsync(u => u.Correo == loginDto.Correo);
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, usuario.Password))
             {
-                return Unauthorized("Invalids Credentials");
+                return Unauthorized("Credenciales invalidas");
             }
-
+            
             var token = GenerateJwtToken(usuario);
-            return Ok(token);
+            var rol = usuario.Rol;
+            var response = new { token, rol };
+            return Ok(response);
 
 
         }

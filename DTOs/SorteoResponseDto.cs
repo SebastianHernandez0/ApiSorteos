@@ -10,5 +10,6 @@
         public DateTime FechaFin { get; set; }
         public int BoletosTotales { get; set; }
         public int BoletosVendidos { get; set; }
+        public string Imagen { get; set; }
     }
 }

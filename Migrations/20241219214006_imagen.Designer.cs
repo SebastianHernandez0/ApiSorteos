@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechLottery.Models;
 
@@ -11,9 +12,11 @@ using TechLottery.Models;
 namespace TechLottery.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241219214006_imagen")]
+    partial class imagen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,66 +77,6 @@ namespace TechLottery.Migrations
                     b.HasIndex("SorteoId");
 
                     b.ToTable("HistorialSorteos");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.Pago", b =>
-                {
-                    b.Property<int>("PagoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoId"));
-
-                    b.Property<string>("EstadoPago")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaPago")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Monto")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TokenWebpay")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PagoId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Pagos");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.PagoDetalle", b =>
-                {
-                    b.Property<int>("PagoDetalleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoDetalleId"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Monto")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PagoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SorteoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PagoDetalleId");
-
-                    b.HasIndex("PagoId");
-
-                    b.HasIndex("SorteoId");
-
-                    b.ToTable("PagoDetalles");
                 });
 
             modelBuilder.Entity("TechLottery.Models.Sorteo", b =>
@@ -243,41 +186,6 @@ namespace TechLottery.Migrations
                     b.Navigation("Ganador");
 
                     b.Navigation("Sorteo");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.Pago", b =>
-                {
-                    b.HasOne("TechLottery.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.PagoDetalle", b =>
-                {
-                    b.HasOne("TechLottery.Models.Pago", "Pago")
-                        .WithMany("PagoDetalles")
-                        .HasForeignKey("PagoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TechLottery.Models.Sorteo", "Sorteo")
-                        .WithMany()
-                        .HasForeignKey("SorteoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pago");
-
-                    b.Navigation("Sorteo");
-                });
-
-            modelBuilder.Entity("TechLottery.Models.Pago", b =>
-                {
-                    b.Navigation("PagoDetalles");
                 });
 #pragma warning restore 612, 618
         }
