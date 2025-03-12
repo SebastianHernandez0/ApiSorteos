@@ -1,10 +1,13 @@
 ﻿namespace TechLottery.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using MercadoPago.Client.Payment;
+    using MercadoPago.Client.PaymentMethod;
     using MercadoPago.Config;
     using MercadoPago.Resource.Payment;
+    using MercadoPago.Resource.PaymentMethod;
 
     namespace TechLottery.Services
     {
@@ -31,6 +34,19 @@
                 var client = new PaymentClient();
                 Payment payment = await client.CreateAsync(paymentRequest);
                 return payment;
+            }
+            public async Task<Payment> GetPaymentAsync(long paymentId)
+            {
+                var client = new PaymentClient();
+                Payment payment = await client.GetAsync(paymentId);
+                return payment;
+            }
+
+            public async Task<List<MercadoPago.Resource.PaymentMethod.PaymentMethod>> GetPaymentMethodsAsync()
+            {
+                var client = new PaymentMethodClient();
+                var paymentMethods = await client.ListAsync();
+                return paymentMethods;
             }
         }
     }
