@@ -19,7 +19,7 @@ namespace TechLottery.Controllers
         public PagosController(Context context, IConfiguration configuration)
         {
             _context = context;
-            var accessToken = configuration["MercadoPago:AccessToken"];
+            var accessToken = Environment.GetEnvironmentVariable("MERCADOPAGO_AT");
             _mercadoPagoService = new MercadoPagoService(accessToken);
         }
 
