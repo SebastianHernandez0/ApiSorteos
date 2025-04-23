@@ -114,7 +114,8 @@ namespace TechLottery.Controllers
             
             var token = GenerateJwtToken(usuario);
             var rol = usuario.Rol;
-            var response = new { token, rol };
+            var userId = usuario.UserId;
+            var response = new { token, rol, userId };
             return Ok(response);
 
 
